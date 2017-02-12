@@ -1,7 +1,33 @@
-/node_modules
-/public/storage
+todo.md
+
+# Laravel stuff
+/bootstrap/compiled.php
 /vendor
-/.idea
-Homestead.json
-Homestead.yaml
+composer.phar
+.env.*.php
+.env.php
 .env
+resources/views/vendor
+Envoy.blade.php
+
+# System
+.DS_Store
+Thumbs.db
+
+# Other
+node_modules/
+*.scssc
+sassdoc
+
+# Storage
+storage/backups
+storage/github
+
+# Public
+public/uploads/
+public/css/
+public/fonts/
+public/js/
+public/vendor/
+public/images/
+
