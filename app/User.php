@@ -34,4 +34,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tweet::class);
     }
+
+    /**
+     * Check if current user is admin.
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return (bool) $this->admin;
+    }
 }

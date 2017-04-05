@@ -28,6 +28,11 @@ class TweetsController extends Controller
         return view('tweets/create');
     }
 
+    public function show(Tweet $tweet)
+    {
+        return view('tweets.show', compact('tweet'));
+    }
+
     /**
      * Store the newly created resource in DB
      * @param  Request $request
@@ -41,6 +46,8 @@ class TweetsController extends Controller
 
         $tweet->content = $request->content;
 
+        $tweet->user_id = auth()->user()->id;
+
         $tweet->save();
 
         return redirect('/');
@@ -51,29 +58,38 @@ class TweetsController extends Controller
      * @param  integer $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(Tweet $tweet)
     {
-        $tweet = Tweet::findOrFail($id);
-
         return view('tweets.edit', compact('tweet'));
     }
 
     /**
      * Update the given resource to storage
      * @param  Request $request
-     * @param  int  $id
+     * @param  int  $tweet
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tweet $tweet)
     {
         $this->validate($request, ['content' => 'required|string|max:140']);
-
-        $tweet = Tweet::findOrFail($id);
 
         $tweet->content = $request->content;
 
         $tweet->save();
 
         return redirect('/');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Tweet  $tweet
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Tweet $tweet)
+    {
+        Tweet::destroy($tweet->id);
+
+        return redirect('/tweets');
     }
 }

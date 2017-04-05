@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" media="screen" title="no title">
 
     <title>Twitter | @yield('title')</title>
+
+    <style type="text/css">
+        .public-layout {
+            padding-top: 8rem;
+        }
+    </style>
 </head>
 <body class="public-layout">
 
@@ -17,5 +23,7 @@
 
     @yield('content')
 
+    <!-- Scripts -->
+    <script src="/js/app.js"></script>
 </body>
 </html>

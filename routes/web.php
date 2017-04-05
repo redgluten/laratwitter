@@ -1,5 +1,7 @@
 <?php
 
+use App\Tweet;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +19,21 @@ Route::get('/', function() {
     return view('index', ['tweets' => $tweets]);
 });
 
-Route::get('tweets/', 'TweetsController@index');
-Route::get('tweets/create', 'TweetsController@create');
-Route::get('tweets/{id}/edit', 'TweetsController@edit');
-Route::put('tweets/{id}', 'TweetsController@update');
-Route::post('tweets', 'TweetsController@store');
+Route::get('tweets/', 'TweetsController@index')->middleware('can:list,App\Tweet');
+Route::get('tweets/create', 'TweetsController@create')->middleware('can:create,App\Tweet');
+Route::get('tweets/{tweet}', 'TweetsController@show')->middleware('can:view,tweet');
+Route::get('tweets/{tweet}/edit', 'TweetsController@edit')->middleware('can:update,tweet');
+Route::put('tweets/{tweet}', 'TweetsController@update')->middleware('can:update,tweet');
+Route::post('tweets', 'TweetsController@store')->middleware('can:create,App\Tweet');
+Route::delete('tweets/{tweet}', 'TweetsController@destroy')->middleware('can:delete,App\Tweet');
 
+Route::get('users/', 'UsersController@index')->middleware('can:list,App\User');
+Route::get('users/create', 'UsersController@create')->middleware('can:create,App\User');
+Route::get('users/{user}', 'UsersController@show')->middleware('can:view,user');
+Route::get('users/{user}/edit', 'UsersController@edit')->middleware('can:update,user');
+Route::put('users/{user}', 'UsersController@update')->middleware('can:update,user');
+Route::post('users', 'UsersController@store')->middleware('can:create,App\User');
+Route::delete('users/{user}', 'UsersController@destroy')->middleware('can:delete,App\User');
 
 Route::get('/a-propos', function() {
     return 'Ce clone de Twitter vous est proposé par Laravel et Open School Design';
@@ -37,5 +48,6 @@ Route::post('/contact', function() {
 });
 
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index');

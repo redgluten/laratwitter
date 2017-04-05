@@ -20,7 +20,7 @@ Publier un nouveau tweet
                         <small class="text-danger">{{ $errors->first('content') }}</small>
                     </div>
 
-                    <input type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </form>
             </div>
         </div>
