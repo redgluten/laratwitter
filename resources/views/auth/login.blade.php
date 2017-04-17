@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Connexion</div>
                 <div class="panel-body">
-                    @include('aut._login-form')
+                    @include('auth._login-form')
                 </div>
             </div>
         </div>
