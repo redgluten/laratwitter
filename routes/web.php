@@ -19,6 +19,14 @@ Route::get('/', function() {
     return view('index', ['tweets' => $tweets]);
 });
 
+Route::get('pages/', 'PagesController@index');
+Route::get('pages/create', 'PagesController@create');
+Route::get('pages/{page}', 'PagesController@show');
+Route::get('pages/{page}/edit', 'PagesController@edit');
+Route::put('pages/{page}', 'PagesController@update');
+Route::post('pages', 'PagesController@store');
+Route::delete('pages/{page}', 'PagesController@destroy');
+
 Route::get('tweets/', 'TweetsController@index')->middleware('can:list,App\Tweet');
 Route::get('tweets/create', 'TweetsController@create')->middleware('can:create,App\Tweet');
 Route::get('tweets/{tweet}', 'TweetsController@show')->middleware('can:view,tweet');
@@ -35,16 +43,10 @@ Route::put('users/{user}', 'UsersController@update')->middleware('can:update,use
 Route::post('users', 'UsersController@store')->middleware('can:create,App\User');
 Route::delete('users/{user}', 'UsersController@destroy')->middleware('can:delete,App\User');
 
-Route::get('/a-propos', function() {
-    return 'Ce clone de Twitter vous est proposé par Laravel et Open School Design';
-});
+Route::get('page-list', function () {
+    $pages = App\Page::orderBy('title', 'asc')->get();
 
-Route::get('/contact', function() {
-    return 'Écrivez nous à exemple@exemple.org';
-});
-
-Route::post('/contact', function() {
-    return 'Désolé le formulaire de contact n’est pas encore prêt';
+    return view('page-list', compact('pages'));
 });
 
 Auth::routes();
