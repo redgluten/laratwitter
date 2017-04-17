@@ -82,17 +82,54 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->validate($request, [
+        $rules = [
             'picture' => 'max:255|url',
             'presentation' => 'string|max:3000',
-        ]);
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+        ];
 
-        $user->picture = $request->picture;
+        if ($request->has('password')) {
+            $rules['password'] = 'required|min:6|confirmed';
+        }
 
-        $user->presentation = $request->presentation;
+        $this->validate($request, $rules);
+
+        if ($request->has('picture')) {
+            $user->picture = $request->picture;
+        }
+
+        if ($request->has('presentation')) {
+            $user->presentation = $request->presentation;
+        }
+
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+
+        if ($request->has('email')) {
+            $user->email = $user->email;
+        }
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
 
         $user->save();
 
         return redirect('users/' . $user->id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        User::destroy($id);
+
+        return redirect()->to('users/');
     }
 }
